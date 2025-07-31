@@ -404,7 +404,7 @@ def main():
     # Professional Header using native Streamlit
     st.markdown("""
     <div class="custom-header">
-        <h1 class="main-title">Elevate NYC</h1>
+        <h1 class="main-title">Nature in NYC </h1>
         <p class="subtitle">Discover the city's finest rooftop experiences</p>
         <p class="tagline">Curated • Premium • Elevated</p>
     </div>
