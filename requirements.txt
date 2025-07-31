@@ -1,0 +1,8 @@
+streamlit
+folium
+streamlit-folium
+openai
+geopy
+pandas
+requests
+python-dotenv
