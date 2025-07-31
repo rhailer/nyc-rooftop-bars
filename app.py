@@ -14,17 +14,12 @@ from typing import Dict, List, Tuple, Optional
 # Load environment variables
 load_dotenv()
 
-# Configure page - Mobile optimized
+# Configure page
 st.set_page_config(
     page_title="Elevate NYC | Rooftop Bar Finder",
     page_icon="🏙️",
     layout="wide",
-    initial_sidebar_state="collapsed",  # Start collapsed for mobile
-    menu_items={
-        'Get Help': None,
-        'Report a bug': None,
-        'About': None
-    }
+    initial_sidebar_state="collapsed"
 )
 
 # Initialize session state
@@ -35,45 +30,17 @@ if 'user_location' not in st.session_state:
 if 'search_performed' not in st.session_state:
     st.session_state.search_performed = False
 
-# Professional Mobile-First CSS - Perplexity Inspired
+# Streamlit-Safe Professional CSS
 st.markdown("""
 <style>
-    /* Import Premium Fonts */
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=SF+Pro+Display:wght@400;500;600;700&display=swap');
+    /* Import Fonts */
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
     
-    /* CSS Variables - Perplexity Inspired Color System */
-    :root {
-        --primary-bg: #0f0f0f;
-        --secondary-bg: #1a1a1a;
-        --card-bg: #202020;
-        --accent-color: #2d7ff9;
-        --accent-hover: #1e5fcc;
-        --text-primary: #ffffff;
-        --text-secondary: #b4b4b4;
-        --text-muted: #6b7280;
-        --border-color: #2d2d2d;
-        --success-color: #00c896;
-        --warning-color: #ffb000;
-        --error-color: #ff4757;
-        --gradient-primary: linear-gradient(135deg, #2d7ff9 0%, #1e40af 100%);
-        --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.2);
-        --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.15);
-        --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.2);
-        --border-radius: 12px;
-        --border-radius-lg: 16px;
-        --spacing-xs: 0.5rem;
-        --spacing-sm: 0.75rem;
-        --spacing-md: 1rem;
-        --spacing-lg: 1.5rem;
-        --spacing-xl: 2rem;
-    }
-    
-    /* Global Reset and Base Styles */
+    /* Global Dark Theme */
     .stApp {
-        background: var(--primary-bg);
-        color: var(--text-primary);
-        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-        line-height: 1.6;
+        background-color: #0f0f0f;
+        color: #ffffff;
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     }
     
     /* Hide Streamlit Elements */
@@ -82,420 +49,150 @@ st.markdown("""
     .stDeployButton {display: none;}
     header[data-testid="stHeader"] {display: none;}
     
-    /* Main Container Spacing */
+    /* Main Container */
     .main .block-container {
         padding-top: 1rem;
-        padding-bottom: 2rem;
         max-width: 1200px;
     }
     
-    /* Professional Header - Centered, Clean */
-    .hero-section {
-        text-align: center;
-        padding: var(--spacing-xl) var(--spacing-md);
-        margin-bottom: var(--spacing-xl);
-        background: var(--card-bg);
-        border-radius: var(--border-radius-lg);
-        border: 1px solid var(--border-color);
-        box-shadow: var(--shadow-md);
+    /* Professional Buttons */
+    .stButton > button {
+        background: linear-gradient(135deg, #2d7ff9, #1e40af) !important;
+        color: white !important;
+        border: none !important;
+        border-radius: 12px !important;
+        padding: 0.75rem 1.5rem !important;
+        font-weight: 600 !important;
+        font-size: 0.95rem !important;
+        transition: all 0.2s ease !important;
+        width: 100% !important;
+        height: 48px !important;
+        box-shadow: 0 4px 12px rgba(45, 127, 249, 0.3) !important;
     }
     
-    .main-title {
-        font-family: 'SF Pro Display', 'Inter', sans-serif;
-        font-size: 2.75rem;
-        font-weight: 700;
-        background: var(--gradient-primary);
-        background-clip: text;
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        margin-bottom: var(--spacing-xs);
-        letter-spacing: -0.025em;
+    .stButton > button:hover {
+        transform: translateY(-2px) !important;
+        filter: brightness(1.1) !important;
+        box-shadow: 0 8px 20px rgba(45, 127, 249, 0.4) !important;
     }
     
-    .subtitle {
-        color: var(--text-secondary);
-        font-size: 1.1rem;
-        font-weight: 400;
-        margin-bottom: var(--spacing-xs);
-    }
-    
-    .tagline {
-        color: var(--text-muted);
-        font-size: 0.85rem;
-        font-weight: 500;
-        text-transform: uppercase;
-        letter-spacing: 0.1em;
-    }
-    
-    /* Search Section - Mobile First */
-    .search-section {
-        background: var(--card-bg);
-        border-radius: var(--border-radius-lg);
-        border: 1px solid var(--border-color);
-        padding: var(--spacing-lg);
-        margin-bottom: var(--spacing-xl);
-        box-shadow: var(--shadow-md);
-    }
-    
-    .search-header {
-        font-size: 1.25rem;
-        font-weight: 600;
-        color: var(--text-primary);
-        margin-bottom: var(--spacing-md);
-        display: flex;
-        align-items: center;
-        gap: var(--spacing-xs);
-    }
-    
-    /* Professional Form Controls */
+    /* Select Boxes */
     .stSelectbox > div > div {
-        background: var(--secondary-bg) !important;
-        border: 1px solid var(--border-color) !important;
-        border-radius: var(--border-radius) !important;
-        color: var(--text-primary) !important;
+        background-color: #202020 !important;
+        border: 1px solid #2d2d2d !important;
+        border-radius: 8px !important;
+        color: white !important;
         font-weight: 500 !important;
     }
     
     .stSelectbox > div > div:focus-within {
-        border-color: var(--accent-color) !important;
+        border-color: #2d7ff9 !important;
         box-shadow: 0 0 0 3px rgba(45, 127, 249, 0.1) !important;
     }
     
-    /* Slider Styling */
-    .stSlider > div > div > div {
-        background: var(--secondary-bg);
+    /* Metrics */
+    div[data-testid="metric-container"] {
+        background: #202020;
+        border: 1px solid #2d2d2d;
+        border-radius: 12px;
+        padding: 1rem;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     }
     
-    .stSlider > div > div > div > div {
-        background: var(--accent-color) !important;
+    div[data-testid="metric-container"] > div {
+        color: #ffffff;
     }
     
-    /* Professional Buttons - Perplexity Style */
-    .stButton > button {
-        background: var(--gradient-primary) !important;
-        color: white !important;
-        border: none !important;
-        border-radius: var(--border-radius) !important;
-        padding: var(--spacing-sm) var(--spacing-lg) !important;
-        font-weight: 600 !important;
-        font-size: 0.95rem !important;
-        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
-        width: 100% !important;
-        box-shadow: var(--shadow-sm) !important;
-        height: 48px !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
+    /* Expandable sections */
+    .streamlit-expanderHeader {
+        background-color: #202020 !important;
+        border-radius: 8px !important;
+        color: #ffffff !important;
     }
     
-    .stButton > button:hover {
-        transform: translateY(-1px) !important;
-        box-shadow: var(--shadow-md) !important;
-        filter: brightness(1.05) !important;
+    .streamlit-expanderContent {
+        background-color: #1a1a1a !important;
+        border-radius: 0 0 8px 8px !important;
     }
     
-    .stButton > button:active {
-        transform: translateY(0) !important;
-    }
-    
-    /* Results Cards - High Contrast */
-    .bar-card {
-        background: var(--card-bg);
-        border: 1px solid var(--border-color);
-        border-radius: var(--border-radius-lg);
-        padding: var(--spacing-lg);
-        margin-bottom: var(--spacing-md);
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        box-shadow: var(--shadow-sm);
-        position: relative;
-        overflow: hidden;
-    }
-    
-    .bar-card::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 3px;
-        background: var(--gradient-primary);
-        opacity: 0;
-        transition: opacity 0.3s ease;
-    }
-    
-    .bar-card:hover {
-        transform: translateY(-2px);
-        box-shadow: var(--shadow-lg);
-        border-color: var(--accent-color);
-    }
-    
-    .bar-card:hover::before {
-        opacity: 1;
-    }
-    
-    /* Card Header - Improved Contrast */
-    .bar-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-start;
-        margin-bottom: var(--spacing-md);
-        gap: var(--spacing-sm);
-    }
-    
-    .bar-name {
-        font-family: 'SF Pro Display', 'Inter', sans-serif;
-        font-size: 1.35rem;
-        font-weight: 600;
-        color: var(--text-primary);  /* Pure white for maximum contrast */
-        margin: 0;
-        flex: 1;
-        line-height: 1.3;
-    }
-    
-    .bar-ranking {
-        background: var(--gradient-primary);
-        color: white;
-        padding: 0.25rem 0.6rem;
-        border-radius: 20px;
-        font-size: 0.8rem;
-        font-weight: 600;
-        min-width: 35px;
-        text-align: center;
-        flex-shrink: 0;
-    }
-    
-    /* Metrics Row - Clean Layout */
-    .bar-metrics {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-        gap: var(--spacing-sm);
-        margin-bottom: var(--spacing-md);
-        padding: var(--spacing-sm);
-        background: var(--secondary-bg);
-        border-radius: var(--border-radius);
-        border: 1px solid var(--border-color);
-    }
-    
-    .metric-item {
-        text-align: center;
-        padding: var(--spacing-xs);
-    }
-    
-    .metric-label {
-        font-size: 0.75rem;
-        color: var(--text-muted);
-        font-weight: 500;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-        margin-bottom: 0.25rem;
-    }
-    
-    .metric-value {
-        font-size: 0.9rem;
-        font-weight: 600;
-        color: var(--text-primary);
-    }
-    
-    .metric-value.rating {
-        color: #fbbf24;
-    }
-    
-    .metric-value.price {
-        color: var(--accent-color);
-    }
-    
-    .metric-value.distance {
-        color: var(--success-color);
-    }
-    
-    /* Description - Better Contrast */
-    .bar-description {
-        color: var(--text-secondary);  /* Lighter gray for better readability */
-        font-style: italic;
-        line-height: 1.5;
-        margin-bottom: var(--spacing-md);
-        padding: var(--spacing-sm);
-        background: rgba(255, 255, 255, 0.02);
-        border-radius: var(--border-radius);
-        border-left: 3px solid var(--accent-color);
-    }
-    
-    /* Action Buttons */
-    .action-buttons {
-        display: flex;
-        gap: var(--spacing-xs);
-        flex-wrap: wrap;
-    }
-    
-    .action-link {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.25rem;
-        padding: var(--spacing-xs) var(--spacing-sm);
-        background: rgba(45, 127, 249, 0.1);
-        border: 1px solid rgba(45, 127, 249, 0.2);
-        border-radius: var(--border-radius);
-        color: var(--accent-color);
-        text-decoration: none;
-        font-size: 0.8rem;
-        font-weight: 500;
-        transition: all 0.2s ease;
-        flex: 1;
-        justify-content: center;
-        min-width: 80px;
-    }
-    
-    .action-link:hover {
-        background: rgba(45, 127, 249, 0.2);
-        border-color: var(--accent-color);
-        text-decoration: none;
-        color: var(--accent-color);
-        transform: translateY(-1px);
-    }
-    
-    .action-link.primary {
-        background: var(--gradient-primary);
-        border-color: transparent;
-        color: white;
-    }
-    
-    .action-link.primary:hover {
-        filter: brightness(1.1);
-        color: white;
-    }
-    
-    /* Map Container */
-    .map-container {
-        border-radius: var(--border-radius-lg);
-        overflow: hidden;
-        box-shadow: var(--shadow-lg);
-        border: 1px solid var(--border-color);
-        background: var(--card-bg);
-        margin-bottom: var(--spacing-lg);
-    }
-    
-    .map-header {
-        background: var(--card-bg);
-        padding: var(--spacing-md);
-        border-bottom: 1px solid var(--border-color);
-    }
-    
-    .map-title {
-        font-size: 1.1rem;
-        font-weight: 600;
-        color: var(--text-primary);
-        margin: 0;
-        display: flex;
-        align-items: center;
-        gap: var(--spacing-xs);
-    }
-    
-    /* Status Messages - High Contrast */
+    /* Success/Error Messages */
     .stSuccess {
-        background: rgba(0, 200, 150, 0.1) !important;
-        border: 1px solid var(--success-color) !important;
-        color: var(--success-color) !important;
-        border-radius: var(--border-radius) !important;
+        background-color: rgba(0, 200, 150, 0.1) !important;
+        border: 1px solid #00c896 !important;
+        color: #00c896 !important;
+        border-radius: 8px !important;
     }
     
     .stError {
-        background: rgba(255, 71, 87, 0.1) !important;
-        border: 1px solid var(--error-color) !important;
-        color: var(--error-color) !important;
-        border-radius: var(--border-radius) !important;
+        background-color: rgba(255, 71, 87, 0.1) !important;
+        border: 1px solid #ff4757 !important;
+        color: #ff4757 !important;
+        border-radius: 8px !important;
     }
     
     .stWarning {
-        background: rgba(255, 176, 0, 0.1) !important;
-        border: 1px solid var(--warning-color) !important;
-        color: var(--warning-color) !important;
-        border-radius: var(--border-radius) !important;
+        background-color: rgba(255, 176, 0, 0.1) !important;
+        border: 1px solid #ffb000 !important;
+        color: #ffb000 !important;
+        border-radius: 8px !important;
     }
     
-    /* Mobile Responsive Breakpoints */
+    /* Headers */
+    h1, h2, h3 {
+        color: #ffffff !important;
+    }
+    
+    /* Custom spacing */
+    .custom-header {
+        text-align: center;
+        padding: 2rem 1rem;
+        background: linear-gradient(135deg, rgba(45, 127, 249, 0.1), rgba(30, 64, 175, 0.1));
+        border-radius: 16px;
+        margin-bottom: 2rem;
+        border: 1px solid #2d2d2d;
+    }
+    
+    .main-title {
+        font-size: 3rem;
+        font-weight: 700;
+        background: linear-gradient(135deg, #2d7ff9, #1e40af);
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 0.5rem;
+    }
+    
+    .subtitle {
+        color: #b4b4b4;
+        font-size: 1.2rem;
+        margin-bottom: 0.5rem;
+    }
+    
+    .tagline {
+        color: #6b7280;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+    }
+    
+    /* Card styling for containers */
+    .search-card {
+        background: #202020;
+        border: 1px solid #2d2d2d;
+        border-radius: 16px;
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+    
+    /* Mobile responsive */
     @media (max-width: 768px) {
         .main-title {
-            font-size: 2.25rem !important;
+            font-size: 2.5rem !important;
         }
-        
         .subtitle {
             font-size: 1rem !important;
         }
-        
-        .bar-header {
-            flex-direction: column;
-            align-items: flex-start;
-            gap: var(--spacing-xs);
-        }
-        
-        .bar-ranking {
-            align-self: flex-start;
-        }
-        
-        .bar-metrics {
-            grid-template-columns: repeat(2, 1fr);
-        }
-        
-        .action-buttons {
-            flex-direction: column;
-        }
-        
-        .action-link {
-            flex: none;
-        }
-    }
-    
-    /* Loading States */
-    .stSpinner > div {
-        border-top-color: var(--accent-color) !important;
-    }
-    
-    /* Expandable Filters */
-    .filters-section {
-        background: var(--secondary-bg);
-        border-radius: var(--border-radius);
-        border: 1px solid var(--border-color);
-        margin-top: var(--spacing-md);
-        overflow: hidden;
-    }
-    
-    .filters-header {
-        padding: var(--spacing-sm) var(--spacing-md);
-        background: var(--card-bg);
-        border-bottom: 1px solid var(--border-color);
-        font-size: 0.9rem;
-        font-weight: 500;
-        color: var(--text-secondary);
-    }
-    
-    .filters-content {
-        padding: var(--spacing-md);
-    }
-    
-    /* Multiselect Styling */
-    .stMultiSelect > div > div {
-        background: var(--secondary-bg) !important;
-        border: 1px solid var(--border-color) !important;
-        border-radius: var(--border-radius) !important;
-    }
-    
-    /* Featured Section */
-    .featured-section {
-        margin-top: var(--spacing-xl);
-    }
-    
-    .section-title {
-        font-size: 1.5rem;
-        font-weight: 600;
-        color: var(--text-primary);
-        margin-bottom: var(--spacing-md);
-        text-align: center;
-    }
-    
-    .section-subtitle {
-        color: var(--text-muted);
-        text-align: center;
-        margin-bottom: var(--spacing-lg);
     }
 </style>
 """, unsafe_allow_html=True)
@@ -610,8 +307,8 @@ class RooftopBarFinder:
             response = openai.ChatCompletion.create(
                 model="gpt-3.5-turbo",
                 messages=[
-                    {"role": "system", "content": "Write sophisticated, concise rooftop bar descriptions in 2-3 sentences. Focus on atmosphere and unique features."},
-                    {"role": "user", "content": f"Describe {bar_name}, a NYC rooftop bar: {vibe}"}
+                    {"role": "system", "content": "Write sophisticated, concise rooftop bar descriptions in 2-3 sentences."},
+                    {"role": "user", "content": f"Describe {bar_name}: {vibe}"}
                 ],
                 max_tokens=100,
                 temperature=0.7
@@ -620,7 +317,7 @@ class RooftopBarFinder:
         except:
             return vibe
     
-    def create_professional_map(self, user_lat: float, user_lng: float, nearby_bars: List[Dict]):
+    def create_map(self, user_lat: float, user_lng: float, nearby_bars: List[Dict]):
         """Create professional map"""
         m = folium.Map(
             location=[user_lat, user_lng],
@@ -631,7 +328,7 @@ class RooftopBarFinder:
         # Dark theme
         folium.TileLayer(
             tiles='https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',
-            attr='&copy; OpenStreetMap contributors &copy; CARTO',
+            attr='CartoDB',
             name="Dark Theme"
         ).add_to(m)
         
@@ -639,122 +336,120 @@ class RooftopBarFinder:
         folium.Marker(
             [user_lat, user_lng],
             popup="📍 Your Location",
-            tooltip="You are here",
             icon=folium.Icon(color='red', icon='home')
         ).add_to(m)
         
-        # Bar markers with ranking-based colors
+        # Bar markers
         for i, bar in enumerate(nearby_bars):
-            if i < 3:
-                color = 'blue'
-            elif i < 6:
-                color = 'green'
-            else:
-                color = 'purple'
+            color = 'blue' if i < 3 else 'green' if i < 6 else 'purple'
             
             folium.Marker(
                 [bar['lat'], bar['lng']],
                 popup=f"#{i+1} {bar['name']}\n⭐ {bar.get('rating', 'N/A')}/5\n📏 {bar['distance']:.1f}mi",
-                tooltip=f"#{i+1} {bar['name']} • {bar['distance']:.1f}mi",
+                tooltip=f"#{i+1} {bar['name']}",
                 icon=folium.Icon(color=color, icon='glass')
             ).add_to(m)
         
         return m
 
-def render_bar_card(bar: Dict, index: int):
-    """Render professional bar card with high contrast"""
+def render_bar_card_native(bar: Dict, index: int):
+    """Render bar card using ONLY Streamlit native components"""
     links = finder.generate_bar_links(bar)
     
-    # Card container
-    st.markdown(f"""
-    <div class="bar-card">
-        <div class="bar-header">
-            <h3 class="bar-name">{bar['name']}</h3>
-            <div class="bar-ranking">#{index + 1}</div>
-        </div>
+    # Create container with custom styling
+    with st.container():
+        # Card header with ranking
+        col1, col2 = st.columns([4, 1])
+        with col1:
+            st.markdown(f"### {bar['name']}")
+        with col2:
+            st.markdown(f"**#{index + 1}**")
         
-        <div class="bar-metrics">
-            <div class="metric-item">
-                <div class="metric-label">Location</div>
-                <div class="metric-value">📍 {bar.get('neighborhood', 'NYC')}</div>
-            </div>
-            <div class="metric-item">
-                <div class="metric-label">Rating</div>
-                <div class="metric-value rating">⭐ {bar.get('rating', 'N/A')}/5</div>
-            </div>
-            <div class="metric-item">
-                <div class="metric-label">Price</div>
-                <div class="metric-value price">💰 {bar.get('price_range', '$$')}</div>
-            </div>
-            {"<div class='metric-item'><div class='metric-label'>Distance</div><div class='metric-value distance'>🚶 " + f"{bar['distance']:.1f} mi</div></div>" if 'distance' in bar else ""}
-        </div>
+        # Metrics in columns
+        col1, col2, col3, col4 = st.columns(4)
         
-        <div class="bar-description">
-            "{bar['vibe']}"
-        </div>
+        with col1:
+            st.metric("📍 Location", bar.get('neighborhood', 'NYC'))
         
-        <div class="action-buttons">
-            <a href="{links['yelp']}" target="_blank" class="action-link primary">
-                📱 Yelp
-            </a>
-            <a href="{links['maps']}" target="_blank" class="action-link">
-                🗺️ Directions
-            </a>
-            <a href="{links['opentable']}" target="_blank" class="action-link">
-                🍽️ Reserve
-            </a>
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
+        with col2:
+            rating = bar.get('rating', 0)
+            st.metric("⭐ Rating", f"{rating}/5" if rating else "N/A")
+        
+        with col3:
+            st.metric("💰 Price", bar.get('price_range', '$$'))
+        
+        with col4:
+            if 'distance' in bar:
+                st.metric("🚶 Distance", f"{bar['distance']:.1f} mi")
+        
+        # Description
+        st.markdown(f"*\"{bar['vibe']}\"*")
+        
+        # Action buttons using columns
+        col1, col2, col3 = st.columns(3)
+        
+        with col1:
+            st.markdown(f"[📱 **Yelp**]({links['yelp']})")
+        with col2:
+            st.markdown(f"[🗺️ **Directions**]({links['maps']})")
+        with col3:
+            st.markdown(f"[🍽️ **Reserve**]({links['opentable']})")
+        
+        st.divider()  # Clean separator
 
-def render_search_interface():
-    """Render the main search interface"""
+def main():
+    global finder
+    finder = RooftopBarFinder()
+    
+    # Professional Header using native Streamlit
     st.markdown("""
-    <div class="search-section">
-        <h2 class="search-header">🔍 Find Your Perfect Rooftop</h2>
+    <div class="custom-header">
+        <h1 class="main-title">Elevate NYC</h1>
+        <p class="subtitle">Discover the city's finest rooftop experiences</p>
+        <p class="tagline">Curated • Premium • Elevated</p>
     </div>
     """, unsafe_allow_html=True)
     
-    # Create columns for the search interface
+    # Search Interface using native components
+    st.markdown('<div class="search-card">', unsafe_allow_html=True)
+    st.subheader("🔍 Find Your Perfect Rooftop")
+    
+    # Search controls
     col1, col2, col3 = st.columns([2, 2, 1])
     
     with col1:
         selected_borough = st.selectbox(
             "Borough",
             options=list(finder.nyc_neighborhoods.keys()),
-            index=0,
-            key="borough_select"
+            index=0
         )
     
     with col2:
         selected_neighborhood = st.selectbox(
             "Neighborhood",
-            options=finder.nyc_neighborhoods[selected_borough],
-            key="neighborhood_select"
+            options=finder.nyc_neighborhoods[selected_borough]
         )
     
     with col3:
         max_distance = st.selectbox(
             "Radius",
             options=[1, 2, 3, 5, 7, 10],
-            index=3,  # Default to 5 miles
-            format_func=lambda x: f"{x} mi",
-            key="distance_select"
+            index=3,
+            format_func=lambda x: f"{x} mi"
         )
     
-    # Search button - full width
-    search_button = st.button("🚀 Discover Rooftops", type="primary", key="main_search")
+    # Search button
+    search_button = st.button("🚀 Discover Rooftops", type="primary")
     
-    # Expandable filters
-    with st.expander("🎛️ Advanced Filters", expanded=False):
+    # Advanced filters
+    with st.expander("🎛️ Advanced Filters"):
         col1, col2 = st.columns(2)
         
         with col1:
             price_filter = st.multiselect(
                 "Price Range",
                 options=["$", "$$", "$$$", "$$$$"],
-                default=["$", "$$", "$$$", "$$$$"],
-                key="price_filter"
+                default=["$", "$$", "$$$", "$$$$"]
             )
         
         with col2:
@@ -763,31 +458,14 @@ def render_search_interface():
                 min_value=1.0,
                 max_value=5.0,
                 value=3.0,
-                step=0.1,
-                key="rating_filter"
+                step=0.1
             )
     
-    return selected_borough, selected_neighborhood, max_distance, search_button, price_filter, min_rating
-
-def main():
-    global finder
-    finder = RooftopBarFinder()
-    
-    # Professional Header
-    st.markdown("""
-    <div class="hero-section">
-        <h1 class="main-title">Elevate NYC</h1>
-        <p class="subtitle">Discover the city's finest rooftop experiences</p>
-        <p class="tagline">Curated • Premium • Elevated</p>
-    </div>
-    """, unsafe_allow_html=True)
-    
-    # Main Search Interface - No Sidebar
-    selected_borough, selected_neighborhood, max_distance, search_button, price_filter, min_rating = render_search_interface()
+    st.markdown('</div>', unsafe_allow_html=True)
     
     # Search Logic
     if search_button:
-        with st.spinner(f"🔍 Finding exceptional rooftops near {selected_neighborhood}..."):
+        with st.spinner(f"🔍 Finding rooftops near {selected_neighborhood}..."):
             user_lat, user_lng = finder.get_neighborhood_center(selected_neighborhood, selected_borough)
             
             if user_lat and user_lng:
@@ -806,73 +484,57 @@ def main():
                     st.session_state.search_location = f"{selected_neighborhood}, {selected_borough}"
                     st.session_state.search_performed = True
                     
-                    st.success(f"✨ Found {len(filtered_bars)} exceptional venues near {selected_neighborhood}!")
+                    st.success(f"✨ Found {len(filtered_bars)} exceptional venues!")
                 else:
-                    st.warning("🔍 No venues match your criteria. Try adjusting your filters.")
+                    st.warning("🔍 No venues match your criteria. Try adjusting filters.")
             else:
-                st.error("📍 Unable to locate the selected neighborhood. Please try another area.")
+                st.error("📍 Unable to locate neighborhood. Please try another area.")
     
     # Display Results
     if st.session_state.search_results and st.session_state.search_performed:
         nearby_bars = st.session_state.search_results
         user_lat, user_lng = st.session_state.user_location
         
-        # Results layout - Mobile responsive
+        # Results layout
         col1, col2 = st.columns([1.6, 1.4], gap="large")
         
         with col1:
-            # Map section
-            st.markdown(f"""
-            <div class="map-container">
-                <div class="map-header">
-                    <h3 class="map-title">📍 {st.session_state.get('search_location', 'Search Results')}</h3>
-                </div>
-            </div>
-            """, unsafe_allow_html=True)
-            
-            map_obj = finder.create_professional_map(user_lat, user_lng, nearby_bars)
-            st_folium(map_obj, width="100%", height=500, key="results_map")
+            st.subheader(f"📍 {st.session_state.get('search_location', 'Results')}")
+            map_obj = finder.create_map(user_lat, user_lng, nearby_bars)
+            st_folium(map_obj, width="100%", height=500)
         
         with col2:
-            # Results list
-            st.markdown('<h3 class="section-title">🏆 Top Recommendations</h3>', unsafe_allow_html=True)
+            st.subheader("🏆 Top Recommendations")
             
-            # Display top results
-            for i, bar in enumerate(nearby_bars[:8]):  # Limit to top 8 for performance
+            for i, bar in enumerate(nearby_bars[:8]):
                 ai_description = finder.generate_ai_description(bar['name'], bar['vibe'])
                 bar_with_ai = bar.copy()
                 bar_with_ai['vibe'] = ai_description
-                render_bar_card(bar_with_ai, i)
+                render_bar_card_native(bar_with_ai, i)
         
         # New search button
-        if st.button("🔄 Search New Area", key="new_search"):
+        if st.button("🔄 Search New Area"):
             st.session_state.search_results = None
             st.session_state.user_location = None
             st.session_state.search_performed = False
             st.rerun()
     
-    # Featured Section (when no search performed)
+    # Featured Section
     elif not st.session_state.search_performed:
-        st.markdown("""
-        <div class="featured-section">
-            <h2 class="section-title">🌟 Featured Rooftop Experiences</h2>
-            <p class="section-subtitle">Discover NYC's most exceptional rooftop venues</p>
-        </div>
-        """, unsafe_allow_html=True)
+        st.subheader("🌟 Featured Rooftop Experiences")
+        st.write("*Discover NYC's most exceptional rooftop venues*")
         
         if finder.bars_data:
-            # Show top-rated featured bars
             featured_bars = sorted(finder.bars_data, key=lambda x: x.get('rating', 0), reverse=True)[:6]
             
-            # Display in responsive columns
-            col1, col2 = st.columns(2, gap="medium")
+            col1, col2 = st.columns(2)
             
             for i, bar in enumerate(featured_bars):
                 with col1 if i % 2 == 0 else col2:
                     ai_description = finder.generate_ai_description(bar['name'], bar['vibe'])
                     bar_with_ai = bar.copy()
                     bar_with_ai['vibe'] = ai_description
-                    render_bar_card(bar_with_ai, i)
+                    render_bar_card_native(bar_with_ai, i)
 
 if __name__ == "__main__":
     main()
