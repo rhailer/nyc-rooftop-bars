@@ -16,7 +16,7 @@ load_dotenv()
 
 # Configure page
 st.set_page_config(
-    page_title="Elevate NYC | Rooftop Bar Finder",
+    page_title="Nature in NYC | Rooftop Bar Finder",
     page_icon="🏙️",
     layout="wide",
     initial_sidebar_state="collapsed"
@@ -433,8 +433,8 @@ def main():
     with col3:
         max_distance = st.selectbox(
             "Radius",
-            options=[1, 2, 3, 5, 7, 10],
-            index=3,
+            options=[0.5, 1, 1.5, 2, 2.5, 3, 4, 5, 7, 10],
+            index=3,  # This selects 2 miles as default (0-indexed: 0.5, 1, 1.5, 2)
             format_func=lambda x: f"{x} mi"
         )
     
